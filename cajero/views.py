@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Producto
 
 # Create your views here.
 def home(request):
@@ -6,3 +7,10 @@ def home(request):
 
 def login(request):
     return render(request, 'cajero/login.html')
+
+def productos(request):
+    productos = Producto.objects.all()
+    data = {
+        'productos':productos
+    }
+    return render(request, 'cajero/productos.html', data)
