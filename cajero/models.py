@@ -10,6 +10,7 @@ class Producto(models.Model):
     unidad_medida = models.CharField(max_length=10)
     precio = models.DecimalField(null=False, validators=[MinValueValidator(Decimal('0.01'))], max_digits=7, decimal_places=2)
     descripcion = models.TextField()
+    cantidad = models.PositiveIntegerField(default=20)
     imagen = models.ImageField(upload_to="productos", null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

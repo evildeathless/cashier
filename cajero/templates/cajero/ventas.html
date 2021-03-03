@@ -1,0 +1,45 @@
+{% extends 'cajero/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div class="container">
+  <div class="row section">
+    <div class="col s4">
+      <div class="section">
+        <form action="">
+          {% csrf_token %}
+          <label for="fname">codigo:</label>
+          <input type="text">
+          <button class="btn waves-effect orange darken-3 right" type="submit" name="action">buscar<i class="material-icons right">search</i>
+          </button>
+        </form>
+      </div>
+      <div class="section">
+
+        <div class="card">
+          <div class="card-image">
+            {% if p.imagen %}
+            <!-- <img src="{% static 'cajero/img/Leopard-Download-PNG.png' %}" alt="" /> -->
+            <img width="400" height="200" src="{{ p.imagen.url}}">
+            {% endif %}
+          </div>
+          <div class="card-content">
+            Codigo: {{p.codigo}}
+            <h5>{{ p.nombre | capfirst }}</h5>
+            <h5>Disponible: {{ p.cantidad }}</h5>
+            <p>{{ p.descripcion}}</p>
+            <h5 class="green-text darken-1">{{ p.precio | intcomma }} PEN</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col s8 white valign-wrapper">Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem iusto magni fugit incidunt? Dicta accusamus nemo obcaecati nam incidunt? Ratione aut qui quo veniam autem porro doloribus nisi, non architecto.</div>
+  </div>
+  <ul class="collection with-header">
+      <li class="collection-header"><h4>Productos</h4></li>
+      <li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+      <li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+      <li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+    </ul>
+</div>
+{% endblock %}

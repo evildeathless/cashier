@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Producto, Venta, Arqueo
 
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ["codigo", "nombre", "unidad_medida", "precio", "created"]
+    list_display = ["codigo", "nombre", "unidad_medida", "precio", "cantidad", "created"]
 
 class VentaAdmin(admin.ModelAdmin):
     list_display = ["id", "id_user", "boleta", "total", "fecha"]
