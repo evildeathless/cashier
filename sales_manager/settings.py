@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'cajero',
     'colorfield',
     'django.contrib.humanize',
+    'admin_totals',
 ]
 
 X_FRAME_OPTIONS='SAMEORIGIN'

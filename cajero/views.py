@@ -56,7 +56,8 @@ def agregar_venta(request):
     current_user = request.user
     # print()
     venta_t = Venta(id_user=current_user, boleta=bol, total = TOTAL[0])
-    venta_t.save()
+    if TOTAL[0] != 0:
+        venta_t.save()
     lista_ventas.clear()
     TOTAL[0] = 0.0
     return render(request, 'cajero/ventas.html')

@@ -35,6 +35,7 @@
             <h5>{{ p.nombre | capfirst }}</h5>
             <h5>Disponible: {{ disp }}</h5>
             <p>{{ p.descripcion}}</p>
+            <p>{{ p.unidad_medida}}</p>
             <h5 class="green-text darken-1">{{ p.precio | intcomma }} PEN</h5>
             <h5 class="blue-text darken-1"> TOTAL: {{ totall | intcomma }} PEN</h5>
           </div>
@@ -72,7 +73,11 @@
             {% endfor %}
           </tbody>
         </table>
+        {% if not p %}
+        <h5 class="blue-text darken-3"> TOTAL: {{ 0 | intcomma }}  PEN</h5>
+        {% else %}
         <h5 class="blue-text darken-1"> TOTAL: {{ TOTAL | intcomma }} PEN</h5>
+        {% endif %}
         <a class="btn waves-effect orange darken-3 right" href="{% url 'add' %}" > agregar <i class="material-icons right"> add</i> </a>
       </div>
     </div>
