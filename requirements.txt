@@ -1,3 +1,4 @@
 django==3.1.6
 pillow
 django_admin_interface==0.12.1
+admin-totals
