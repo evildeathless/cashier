@@ -30,6 +30,9 @@
               <li><a href="{% url 'admin:index' %}"> Admin</a></li>
               <li><a href="{% url 'productos' %}"> Almacen</a></li>
               <li><a href="{% url 'ventas' %}"> Venta</a></li>
+              {% if user.is_superuser %}
+              <li><a href="{% url 'arqueo' %}"> Arqueo caja</a></li>
+              {% endif %}
               <li><a class="green-text darken-1" href="#"> {{ user.first_name|upper }}</a></li>
               <li><a href="{% url 'logout' %}"> Logout</a></li>
               {% else %}

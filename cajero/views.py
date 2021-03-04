@@ -1,13 +1,39 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Producto, Venta
 from django.conf import settings
+from django.db.models import Sum
+
 lista_ventas = []
 cb = [1]
 TOTAL = [0.0]
 
 # Create your views here.
 def home(request):
-    return render(request, 'cajero/home.html')
+    productos = Producto.objects.all().order_by('nombre')
+    data = {
+        'productos':productos
+    }
+    return render(request, 'cajero/home.html', data)
+
+def arqueo_caja(request):
+    sum_total = 0
+    ventas = Venta.objects.all()
+    sum_total = Venta.objects.aggregate(Sum('total'))
+    if request.method == "POST":
+        dte = request.POST["fech"].split('-')
+        ventas = Venta.objects.filter(fecha__day=dte[2], fecha__month=dte[1], fecha__year=dte[0])
+        sum_total = Venta.objects.filter(fecha__day=dte[2], fecha__month=dte[1], fecha__year=dte[0]).aggregate(Sum('total'))['total__sum']
+        print("ssssss", sum_total)
+        data = {
+            'ventas':ventas,
+            'sum':sum_total
+        }
+        return render(request, 'cajero/arqueo.html', data)
+    data = {
+        'ventas':ventas,
+        'sum':sum_total['total__sum']
+    }
+    return render(request, 'cajero/arqueo.html', data)
 
 def login(request):
     return render(request, 'cajero/login.html')

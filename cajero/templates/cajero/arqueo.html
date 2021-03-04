@@ -1,0 +1,52 @@
+{% extends 'cajero/base.html' %} 
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div class="container section">
+  <h5>ARQUEO DE CAJA</h5>
+  <div class="row section">
+    <div class="col s3">
+      <div class="section">
+        <form action="{% url 'arqueo' %}" method="POST">
+          {% csrf_token %}
+          <input type="date" name="fech" required>
+          <button class="btn waves-effect cyan darken-3 right" type="submit" name="action">calcular<i class="material-icons right">send</i>
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="col s9 white valign-wrapper">
+      <div class="container section">
+        <table class="striped centered responsive-table">
+          <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Usuario</th>
+                <th>Boleta</th>
+                <th>Total</th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            {% for val in ventas %}
+            <tr>
+                <td>{{val.id}}</td>
+                <td>{{val.fecha}}</td>
+                <td>{{val.id_user}}</td>
+                <td>{{val.boleta}}</td>
+                <td>{{val.total}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <h6 class="cyan-text darken-1 right"> TOTAL: {{ sum }}  PEN</h6>
+
+        <!-- <a class="btn waves-effect orange darken-3 right" href="{% url 'add' %}" > agregar <i class="material-icons right"> add</i> </a> -->
+      </div>
+    </div>
+  </div>
+
+
+</div>
+{% endblock %}
