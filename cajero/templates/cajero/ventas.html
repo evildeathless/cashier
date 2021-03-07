@@ -1,6 +1,9 @@
 {% extends 'cajero/base.html' %}
 {% load static %}
 {% load humanize %}
+{% block title %} 
+<title>Ventas</title>
+{% endblock %}
 {% block content %}
 <div class="container">
   <div class="row section">
@@ -11,12 +14,16 @@
           <!-- <label >codigo:</label> -->
           {% if p %}
           <input type="text" name="codigo" placeholder="{{ p.codigo }}" required>
+          <label for="codigo">codigo producto</label>
           <input type="text" name="cantidad" placeholder="{{ cant }}">
+          <label for="cantidad">cantidad</label>
           {% else %}
-          <input type="text" name="codigo" placeholder="CODIGO" required>
-          <input type="text" name="cantidad" placeholder="CANTIDAD">
+          <input type="text" name="codigo" placeholder="740877004431" required>
+          <label for="codigo">codigo producto</label>
+          <input type="text" name="cantidad" placeholder="5">
+          <label for="cantidad">cantidad</label>
           {% endif %}
-          <button class="btn waves-effect orange darken-3 right" type="submit" name="action">buscar<i class="material-icons right">search</i>
+          <button class="btn waves-effect blue darken-1 right" type="submit" name="action">buscar<i class="material-icons right">search</i>
           </button>
         </form>
       </div>
@@ -78,7 +85,8 @@
         {% else %}
         <h5 class="blue-text darken-1"> TOTAL: {{ TOTAL | intcomma }} PEN</h5>
         {% endif %}
-        <a class="btn waves-effect orange darken-3 right" href="{% url 'add' %}" > agregar <i class="material-icons right"> add</i> </a>
+        <a class="btn waves-effect red darken-1 left" href="{% url 'cancel' %}" >cancelar<i class="material-icons right">delete_forever</i> </a>
+        <a class="btn waves-effect green darken-1 right" href="{% url 'add' %}" >confirmar<i class="material-icons right">price_check</i> </a>
       </div>
     </div>
   </div>

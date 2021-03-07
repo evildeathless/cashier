@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db.models import Sum
 
 lista_ventas = []
+cancel = []
 cb = [1]
 TOTAL = [0.0]
 
@@ -23,10 +24,10 @@ def arqueo_caja(request):
         dte = request.POST["fech"].split('-')
         ventas = Venta.objects.filter(fecha__day=dte[2], fecha__month=dte[1], fecha__year=dte[0])
         sum_total = Venta.objects.filter(fecha__day=dte[2], fecha__month=dte[1], fecha__year=dte[0]).aggregate(Sum('total'))['total__sum']
-        print("ssssss", sum_total)
         data = {
             'ventas':ventas,
-            'sum':sum_total
+            'sum':sum_total,
+            'flag':True
         }
         return render(request, 'cajero/arqueo.html', data)
     data = {
@@ -58,8 +59,10 @@ def ventas(request):
         cod = request.POST["codigo"]
         cant = float(request.POST["cantidad"])
         producto = get_object_or_404(Producto, codigo = cod)
-        cant_updated = int(producto.cantidad - cant)
+        disponible = producto.cantidad
+        cant_updated = int(disponible - cant)
         if cant_updated >= 0:
+            cancel.append((cod, disponible))
             Producto.objects.filter(codigo=cod).update(cantidad = cant_updated)
             total = cant * float(producto.precio)
             lista_ventas.append(Venta_(producto.nombre, producto.precio, int(cant), total,))
@@ -67,7 +70,7 @@ def ventas(request):
         data = {
             'p':producto,
             'totall': total,
-            'disp': cant_updated,
+            'disp': disponible,
             'cant': int(cant),
             'list_ven': lista_ventas,
             'TOTAL': TOTAL[0]
@@ -84,6 +87,17 @@ def agregar_venta(request):
     venta_t = Venta(id_user=current_user, boleta=bol, total = TOTAL[0])
     if TOTAL[0] != 0:
         venta_t.save()
+    lista_ventas.clear()
+    cancel.clear()
+    TOTAL[0] = 0.0
+    return render(request, 'cajero/ventas.html')
+
+def cancelar_venta(request):
+    while len(cancel) != 0:
+        val = cancel.pop()
+        producto = get_object_or_404(Producto, codigo = val[0])
+        Producto.objects.filter(codigo=val[0]).update(cantidad = val[1])
+    cancel.clear()
     lista_ventas.clear()
     TOTAL[0] = 0.0
     return render(request, 'cajero/ventas.html')

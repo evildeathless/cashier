@@ -1,6 +1,9 @@
 {% extends 'cajero/base.html' %} 
 {% load static %}
 {% load humanize %}
+{% block title %} 
+<title>Arqueo de caja</title>
+{% endblock %}
 {% block content %}
 <div class="container section">
   <h5>ARQUEO DE CAJA</h5>
@@ -10,7 +13,7 @@
         <form action="{% url 'arqueo' %}" method="POST">
           {% csrf_token %}
           <input type="date" name="fech" required>
-          <button class="btn waves-effect cyan darken-3 right" type="submit" name="action">calcular<i class="material-icons right">send</i>
+          <button class="btn waves-effect cyan darken-1 right" type="submit" name="action">buscar<i class="material-icons right">search</i>
           </button>
         </form>
       </div>
@@ -40,13 +43,35 @@
             {% endfor %}
           </tbody>
         </table>
-        <h6 class="cyan-text darken-1 right"> TOTAL: {{ sum }}  PEN</h6>
-
+        <div class="section">
+          <h6 id="total" class="cyan-text darken-1 right">TOTAL: {{ sum }} PEN</h6>
+        </div>
+        <div class="section">
+          <h6 class="grey-text darken-4 left"> INICIAL: 00.00 PEN</h6>
+        </div>
+        {% if flag %}
+        <input id="rec" type="number" name="recaudado" required placeholder="00.00"  >
+        <label class="active" for="rec">Total recaudado</label>
+        <div class="section">
+          <button id="sp" class="btn">calcular<i class="material-icons right">calculate</i></button>
+        </div>
+        <div class="section">
+          <h6 id="sob" class="green-text darken-1 left"> SOBRANTE: 00.00 PEN</h6>
+        </div>
+        <div class="section">
+          <h6 id="fal" class="red-text darken-1">FALTANTE: 00.00 PEN</h6>
+        </div>
+        <div class="section">
+          <a class="btn-small waves-effect blue darken-1 left" href="{% url 'ventas' %}">ventas<i class="material-icons right">shopping_cart</i> </a>
+          <button class="btn-small waves-effect grey darken-1 right" type="submit">imprimir<i class="material-icons right">print</i></button>
+        </div>
+        {% endif %}
         <!-- <a class="btn waves-effect orange darken-3 right" href="{% url 'add' %}" > agregar <i class="material-icons right"> add</i> </a> -->
       </div>
     </div>
   </div>
-
-
 </div>
+{% endblock %}
+{% block js %}
+<script src="{% static 'cajero/js/arq.js' %}"></script>
 {% endblock %}
