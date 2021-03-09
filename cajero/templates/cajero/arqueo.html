@@ -13,6 +13,7 @@
         <form action="{% url 'arqueo' %}" method="POST">
           {% csrf_token %}
           <input type="date" name="fech" required>
+          <label for="fech">fecha</label>
           <button class="btn waves-effect cyan darken-1 right" type="submit" name="action">buscar<i class="material-icons right">search</i>
           </button>
         </form>

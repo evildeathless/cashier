@@ -26,7 +26,7 @@
             <a href="#" class="brand-logo">La Canastita</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
               {% if user.is_authenticated %}
-              <li><a href="{% url 'home' %}"> Home<i class="material-icons right">home</i></a></li>
+              <li><a href="{% url 'home' %}"> Waldo<i class="material-icons right">home</i></a></li>
               <li><a href="{% url 'admin:index' %}"> Admin<i class="material-icons right">admin_panel_settings</i></a></li>
               <li><a href="{% url 'productos' %}"> Almacen<i class="material-icons right">apartment</i></a></li>
               <li><a href="{% url 'ventas' %}"> Venta<i class="material-icons right">shopping_cart</i></a></li>
